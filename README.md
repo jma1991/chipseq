@@ -1,7 +1,7 @@
-A computational pipeline for comparative ChIP-seq analyses
-==========================================================
+Chomp
+=====
 
-A small library for padding strings in JavaScript. Marmalade-free.
+A workflow for ChIP-seq analyses in Snakemake.
 
 [![NPM version][shield-npm]](#)
 [![Node.js version support][shield-node]](#)
