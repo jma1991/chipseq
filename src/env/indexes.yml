@@ -1,0 +1,7 @@
+name: indexes
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bowtie2

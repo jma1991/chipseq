@@ -1,33 +1,36 @@
 # Configuration
-configfile: "config.yml"
+configfile: "config.yaml"
+
+# Variables
+import itertools
+CONTRASTS = list(config["contrasts"].keys())
+GROUPS = list(config["groups"].keys())
+SAMPLES = list(config["samples"].keys())
+RUNS = config["samples"].values()
+RUNS = list(itertools.chain.from_iterable(RUNS))
 
 # Wildcards
 wildcard_constraints:
-    contrast = "|".join(CONTRASTS),
-    group = "|".join(GROUPS),
+    contrasts = "|".join(CONTRASTS),
+    groups = "|".join(GROUPS),
     sample = "|".join(SAMPLES),
     run = "|".join(RUNS)
 
 # Targets
 rule default:
     input:
-        expand("data/samples/{sample}/{sample}_filter.bam", sample = SAMPLES),
-        expand("data/samples/{group}/{group}_filter.bam", group = GROUPS),
-        expand("results/peaks/{contrast}/{contrast}_peaks.narrowPeak", contrast = CONTRASTS),
-        expand("results/peaks/{contrast}/{contrast}_peaks.gappedPeak", contrast = CONTRASTS),
-        expand("results/coverage/{contrast}/{contrast}_treatment.bigWig", contrast = CONTRASTS)
+        expand("data/reads/raw/{run}.fastq.gz", run = RUNS),
+        expand("data/reads/trimmed/{run}.fastq.gz", run = RUNS),
+        expand("results/alignments/raw/{run}.bam", run = RUNS),
+        expand("results/alignments/merged/{sample}.bam", sample = SAMPLES),
+        expand("results/alignments/markdup/{sample}.bam", sample = SAMPLES),
+        expand("results/alignments/filtered/{sample}.bam", sample = SAMPLES),
 
 # Rules
-include: "rules/genomes.smk"
-include: "rules/indexes.smk"
-include: "rules/samples.smk"
-include: "rules/markdup.smk"
-include: "rules/filter.smk"
-include: "rules/groups.smk"
-include: "rules/pseudo.smk"
-include: "rules/peaks.smk"
-include: "rules/coverage.smk"
-
-# Reports
-report: "reports/analysis.rst"
-report: "reports/workflow.rst"
+include: "src/smk/genomes.smk"
+include: "src/smk/reads.smk"
+include: "src/smk/alignments.smk"
+include: "src/smk/quality.smk"
+include: "src/smk/coverage.smk"
+include: "src/smk/peaks.smk"
+include: "src/smk/metrics.smk"

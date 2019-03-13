@@ -1,0 +1,32 @@
+contrasts:
+  SRG0001:
+    - SRG0001
+    - SRG0002
+  SRS0001:
+    - SRS0001
+    - SRS0003
+  SRS0002:
+    - SRS0002
+    - SRS0004
+
+groups:
+  SRG0001:
+    - SRS0001
+    - SRS0002
+  SRG0002:
+    - SRS0003
+    - SRS0004
+
+samples:
+  SRS0001:
+    - SRR0001
+    - SRR0002
+  SRS0002:
+    - SRR0003
+    - SRR0004
+  SRS0003:
+    - SRR0005
+    - SRR0006
+  SRS0004:
+    - SRR0007
+    - SRR0008
