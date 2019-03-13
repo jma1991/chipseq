@@ -1,7 +1,0 @@
-name: peaks
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - macs2

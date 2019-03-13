@@ -27,10 +27,10 @@ rule default:
         expand("results/alignments/filtered/{sample}.bam", sample = SAMPLES),
 
 # Rules
-include: "src/smk/genomes.smk"
-include: "src/smk/reads.smk"
-include: "src/smk/alignments.smk"
-include: "src/smk/quality.smk"
-include: "src/smk/coverage.smk"
-include: "src/smk/peaks.smk"
-include: "src/smk/metrics.smk"
+include: "workflow/rules/genomes.smk"
+include: "workflow/rules/reads.smk"
+include: "workflow/rules/alignments.smk"
+include: "workflow/rules/quality.smk"
+include: "workflow/rules/coverage.smk"
+include: "workflow/rules/peaks.smk"
+include: "workflow/rules/metrics.smk"

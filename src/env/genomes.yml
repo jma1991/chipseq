@@ -1,7 +1,0 @@
-name: genomes
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - genomepy
