@@ -1,7 +1,7 @@
-name: peaks
+name: samtools
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - macs2
+  - samtools

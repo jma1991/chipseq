@@ -1,7 +1,7 @@
-name: genomes
+name: cutadapt
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - genomepy
+  - cutadapt

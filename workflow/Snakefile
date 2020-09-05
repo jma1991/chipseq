@@ -1,5 +1,5 @@
 # Configuration
-configfile: "config.yaml"
+pepfile: "config/config.yaml"
 
 # Variables
 import itertools
@@ -19,18 +19,11 @@ wildcard_constraints:
 # Targets
 rule default:
     input:
-        expand("data/reads/raw/{run}.fastq.gz", run = RUNS),
-        expand("data/reads/trimmed/{run}.fastq.gz", run = RUNS),
-        expand("results/alignments/raw/{run}.bam", run = RUNS),
-        expand("results/alignments/merged/{sample}.bam", sample = SAMPLES),
-        expand("results/alignments/markdup/{sample}.bam", sample = SAMPLES),
-        expand("results/alignments/filtered/{sample}.bam", sample = SAMPLES),
+        expand("results/bwa/{sample}/{subsample}.bam")
 
 # Rules
-include: "workflow/rules/genomes.smk"
-include: "workflow/rules/reads.smk"
-include: "workflow/rules/alignments.smk"
-include: "workflow/rules/quality.smk"
-include: "workflow/rules/coverage.smk"
-include: "workflow/rules/peaks.smk"
-include: "workflow/rules/metrics.smk"
+include: "workflow/rules/bwa.smk"
+include: "workflow/rules/cutadapt.smk"
+include: "workflow/rules/fastqc.smk"
+include: "workflow/rules/genomepy.smk"
+include: "workflow/rules/samtools.smk"

@@ -1,6 +1,7 @@
+name: phantompeakqualtools
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - samtools
+  - phantompeakqualtools
