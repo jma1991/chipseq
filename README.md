@@ -1,122 +1,82 @@
-Chomp
-=====
+# CHIP-SEQ <img align="right" width="200" src="images/roundel.png">
 
-A workflow for ChIP-seq analyses in Snakemake.
+A workflow for ChIP-seq analysis in Snakemake.
 
-[![NPM version][shield-npm]](#)
-[![Node.js version support][shield-node]](#)
-[![Build status][shield-build]](#)
-[![Code coverage][shield-coverage]](#)
-[![Dependencies][shield-dependencies]](#)
-[![MIT licensed][shield-license]](#)
-
-```js
-paddington.pad('foo', 5, '_');   // _foo_
-paddington.left('foo', 5, '_');  // __foo
-paddington.right('foo', 5, '_'); // foo__
-```
+[![Snakemake][shield-snakemake]](https://snakemake.readthedocs.io)
+[![MIT license][shield-license]](https://choosealicense.com/licenses/mit)
 
 Table of Contents
 -----------------
 
+  * [Introduction](#introduction)
   * [Requirements](#requirements)
   * [Usage](#usage)
   * [Contributing](#contributing)
   * [Support and Migration](#support-and-migration)
+  * [Thanks](#thanks)
   * [License](#license)
+
+Introduction
+------------
+
+The Ripple workflow is a bioinformatics analysis pipeline for RNA sequencing data. The workflow is built using [Snakemake - a scalabale bioinformatics workflow engine](https://doi.org/10.1093/bioinformatics/bts480)
 
 
 Requirements
 ------------
 
-Paddington requires the following to run:
+This workflow requires the following software to run:
 
-  * [Node.js][node] 0.10+
-  * [npm][npm] (normally comes with Node.js)
-
+  * [Snakemake][snakemake] 0.10+
+  * [Conda][code] (normally comes with Node.js)
 
 Usage
 -----
 
-Paddington is easiest to use when installed with [npm][npm]:
+
+Ripple is easiest to use when installed with [npm][npm]:
+
+
+Clone workflow into working directory:
 
 ```sh
-npm install paddington
+git clone https://github.com/jma1991/rnaseq.git
 ```
 
-Then you can load the module into your code with a `require` call:
+Execute workflow and deploy software dependencies via conda:
 
-```js
-var paddington = require('paddington');
+```sh
+snakemake --use-conda
 ```
 
-The `paddington` object has the following methods.
+Configuration
+-------------
 
-### `paddington.pad( string, length [, character = ' '] )`
+Configure the workflow by editing the files in the `config` directory:
 
-Pad a string, distributing the padding equally on the left and right.
+- `config.yaml` is a YAML file containing the workflow metadata.
 
-`string` is the string we want to pad (_String_).  
-`length` is the length we want to pad it to (_Number_).  
-`character` is an optional character to pad with (_String_, defaults to `" "`).  
-`return` is the padded string (_String_).
+- `samples.csv` is a CSV file containing the sample metadata.
 
-```js
-// Example
-paddington.pad('foo', 5); // returns " foo "
-paddington.pad('foo', 5, '_'); // returns "_foo_"
-```
-
-### paddington.left( string, length [, character = ' '] )
-
-Pad a string on the left hand side. This method has the same signature as `paddington.pad`.
-
-```js
-// Example
-paddington.left('foo', 5); // returns " foo"
-paddington.left('foo', 5, '_'); // returns "__foo"
-```
-
-### paddington.right( string, length [, character = ' '] )
-
-Pad a string on the right hand side. This method has the same signature as `paddington.pad`.
-
-```js
-// Example
-paddington.right('foo', 5); // returns "foo  "
-paddington.right('foo', 5, '_'); // returns "foo__"
-```
-
-### Longer strings
-
-When a string is longer than the specified pad length, it will not be trimmed. In this case the string will be returned as-is:
-
-```js
-paddington.pad('foobar', 5); // returns "foobar"
-```
-
-### Error handling
-
-All of the methods documented above will throw a `TypeError` if an argument is not of the expected type.
-
+- `units.csv` is a CSV file contains the unit metadata.
 
 Contributing
 ------------
 
-To contribute to Paddington, clone this repo locally and commit your code on a separate branch. Please write unit tests for your code, and run the linter before opening a pull-request:
+To contribute to the workflow, clone this repository locally and commit your code on a separate branch. Please generate unit tests for your code, and run the linter before opening a pull-request:
 
 ```sh
-make test  # run all unit tests
-make lint  # run the linter
+snakemake --generate-unit-tests # generate unit tests
+snakemake --lint # run the linter
 ```
 
-You can find more detail in our [contributing guide](#). Participation in this open source project is subject to a [Code of Conduct](#).
+You can find more detail in our [Contributing Guide](#). Participation in this open source project is subject to a [Code of Conduct](#).
 
 
 Support and Migration
 ---------------------
 
-Paddington major versions are normally supported for 6 months after their last minor release. This means that patch-level changes will be added and bugs will be fixed. The table below outlines the end-of-support dates for major versions, and the last minor release for that version.
+Ripple major versions are normally supported for 6 months after their last minor release. This means that patch-level changes will be added and bugs will be fixed. The table below outlines the end-of-support dates for major versions, and the last minor release for that version.
 
 We also maintain a [migration guide](#) to help you migrate.
 
@@ -129,17 +89,17 @@ We also maintain a [migration guide](#) to help you migrate.
 If you're opening issues related to these, please mention the version that the issue relates to.
 
 
+Thanks
+------
+
+I would like to thank Johannes Köster for developing the Snakemake workflow engine and Istvan Albert for writing the biostar handbook.
+
 License
 -------
 
-Paddington is licensed under the [MIT](#) license.  
-Copyright &copy; 2019, James Ashmore
+This workflow is licensed under the [MIT](#) license.  
+Copyright &copy; 2020, James Ashmore
 
-[node]: https://nodejs.org/
-[npm]: https://www.npmjs.com/
-[shield-coverage]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg
-[shield-dependencies]: https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg
+
+[shield-snakemake]: https://img.shields.io/badge/snakemake-≥5.6.0-brightgreen.svg
 [shield-license]: https://img.shields.io/badge/license-MIT-blue.svg
-[shield-node]: https://img.shields.io/badge/node.js%20support-0.10–5-brightgreen.svg
-[shield-npm]: https://img.shields.io/badge/npm-v3.2.0-blue.svg
-[shield-build]: https://img.shields.io/badge/build-passing-brightgreen.svg
