@@ -5,64 +5,19 @@
 
 rule fastqc:
     input:
-        fqz = lambda wildcards: pep.subsample_table.loc[]
+        fqz = "results/fastq/{sample}/{unit}{read}.fastq.gz"
     output:
-        ext = multiext("results/fastqc/{sample}/{subsample}_fastqc", ".html", ".zip")
+        ext = multiext("results/fastqc/{sample}/{unit}{read,.*}_fastqc", ".html", ".zip")
     params:
-        out = lambda wildcards, output: os.path.dirname(output)
+        out = "results/fastqc/{sample}"
     log:
-        "logs/fastqc/{sample}/{subsample}.log"
+        out = "results/fastqc/{sample}/{unit}{read}_fastqc.out",
+        err = "results/fastqc/{sample}/{unit}{read}_fastqc.err"
     message:
-        "[fastqc]"
+        "[fastqc] Generate quality control report for {input.fqz}"
     threads:
-        16
+        1
+    conda:
+        "../envs/fastqc.yaml"
     shell:
-        "fastqc -o {params.out} -t {threads} -q {input.fqz} > {log}"
-
-rule fastqc:
-    input:
-        fqz = lambda wildcards: pep.subsample_table.loc[]
-    output:
-        ext = multiext("results/fastqc/{sample}/{subsample}_{read}_fastqc", ".html", ".zip")
-    params:
-        out = lambda wildcards, output: os.path.dirname(output)
-    log:
-        "logs/fastqc/{sample}/{subsample}_{read}.log"
-    message:
-        "[fastqc]"
-    threads:
-        16
-    shell:
-        "fastqc -o {params.out} -t {threads} -q {input.fqz} > {log}"
-
-rule fastqc:
-    input:
-        fqz = "results/cutadapt/{sample}/{subsample}.fastq.gz"
-    output:
-        ext = multiext("results/fastqc/{sample}/{subsample}_fastqc", ".html", ".zip")
-    params:
-        out = lambda wildcards, output: os.path.dirname(output)
-    log:
-        "logs/fastqc/{sample}/{subsample}.log"
-    message:
-        "[fastqc]"
-    threads:
-        16
-    shell:
-        "fastqc -o {params.out} -t {threads} -q {input.fqz} > {log}"
-
-rule fastqc:
-    input:
-        fqz = "results/cutadapt/{sample}/{subsample}_{read}.fastq.gz"
-    output:
-        ext = multiext("results/fastqc/{sample}/{subsample}_{read}_fastqc", ".html", ".zip")
-    params:
-        out = lambda wildcards, output: os.path.dirname(output)
-    log:
-        "logs/fastqc/{sample}/{subsample}_{read}.log"
-    message:
-        "[fastqc]"
-    threads:
-        16
-    shell:
-        "fastqc -o {params.out} -t {threads} -q {input.fqz} > {log}"
+        "fastqc -o {params.out} -t {threads} {input.fqz} 1> {log.out} 2> {log.err}"

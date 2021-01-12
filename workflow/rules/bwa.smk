@@ -5,23 +5,15 @@
 
 rule bwa_index:
     input:
-        "results/bwa/{genome}.fasta"
+        "results/genomepy/install/{genome}/{genome}.fa"
     output:
-        "results/bwa/{genome}.amb",
-        "results/bwa/{genome}.ann",
-        "results/bwa/{genome}.bwt",
-        "results/bwa/{genome}.pac",
-        "results/bwa/{genome}.sa"
+        multiext("results/bwa/index/{genome}", ".amb", ".ann", ".bwt", ".pac", ".sa")
     params:
-        ""
-    log:
-        "logs/bwa/{genome}.log"
-    message:
-        "[bwa]"
+        "resuls/bwa/index/{genome}"
     threads:
         16
     shell:
-        "bwa index"
+        "bwa index -p {params} {input}"
 
 rule bwa_mem:
     input:
